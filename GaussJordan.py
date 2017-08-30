@@ -34,3 +34,16 @@ for tt in xrange(0, n):
 print "Matriz final"
 print x
 
+y=np.zeros([n+1], float)
+for i in xrange(0,n+1):
+ y[i]=x.item(i,n+1)
+
+for i in xrange(n,-1,-1):
+ j=n
+ while (j>i):
+  y[i]=y[i]-x.item(i,j)*y[j]
+  j=j-1
+ y[i]=y[i]/x.item(i,i)
+print "Valores finais da substituicao:"
+print y
+
