@@ -19,4 +19,9 @@ for i in xrange(n,-1,-1):
 print "Matriz ordenada: "
 print x
 
+for i in xrange(1,n+1):
+ x[i]=np.copy(x[i]-x[0]*(x.item(i,0)/x.item(0,0)))
+
+print "Matriz com primeira coluna zerada"
+print x
 
