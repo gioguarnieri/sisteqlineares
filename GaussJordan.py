@@ -25,3 +25,12 @@ for i in xrange(1,n+1):
 print "Matriz com primeira coluna zerada"
 print x
 
+print "Comecando o escalonamento"
+for tt in xrange(0, n):
+ for t in xrange(tt+1,n+1):
+  if x.item(t,tt)!=0:
+   x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
+
+print "Matriz final"
+print x
+
