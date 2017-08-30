@@ -1,18 +1,18 @@
 # Sistemas de equações lineares:
 Programas para resolver sistemas de equações lineares, conteúdo:
 
-* Gauss Jordan
-O processo é realizado em algumas etapas, sendo elas:
+## Gauss Jordan
+### Etapas
  * Criação do arquivo com o comando _touch_;
  * Inicialização da matriz:
  
- 1  1  0  3  4
+ [1  1  0  3  4]
  
- 2  1 -1  1  1
+ [2  1 -1  1  1]
  
- 3 -1 -1  2 -3
+ [3 -1 -1  2 -3]
  
--1  2  3 -1  4
+[-1  2  3 -1  4]
 
  * Impressão da matriz
  * Ordenação da matriz, colocando a linha com 0 em uma n-1, onde n é a coluna que o 0 está presente
