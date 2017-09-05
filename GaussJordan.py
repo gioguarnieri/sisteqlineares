@@ -4,9 +4,18 @@
 #3 -1 -1  2 -3
 #-1 2  3 -1  4
 
+#2  2 -1  3
+#3  3  1  7
+#1 -2 -5  5
+
+#2  2 -1  3
+#3  3  1  7
+#1 -1  5  5
+
 import sys
 import numpy as np
-x=np.matrix( ((1.,1.,0.,3.,4.), (2.,1.,-1.,1.,1.), (3.,-1.,-1.,2.,-3.), (-1.,2.,3.,-1.,4.)) )
+x=np.matrix( ((2.,2.,-1.,3.), (3.,3.,1.,7.), (1.,-2.,-5.,5.)) )
+z=np.copy(x)
 n=len(x)-1
 print "Matriz antes de tudo:"
 print x
@@ -28,8 +37,14 @@ print x
 print "Comecando o escalonamento"
 for tt in xrange(0, n):
  for t in xrange(tt+1,n+1):
-  if x.item(t,tt)!=0:
+  if abs(x.item(tt,tt))>=abs(x.item(t,tt)):
    x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
+  else:
+   y=np.copy(x[tt])
+   x[tt]=np.copy(x[t])
+   x[t]=np.copy(y)
+   x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
+ print x
 
 print "Matriz final"
 print x
@@ -44,6 +59,17 @@ for i in xrange(n,-1,-1):
   y[i]=y[i]-x.item(i,j)*y[j]
   j=j-1
  y[i]=y[i]/x.item(i,i)
+
+
 print "Valores finais da substituicao:"
 print y
+
+print "Valores depois de substituir: "
+w=np.zeros([n+1], float)
+
+for tt in xrange(0,n+1):
+ for t in xrange(0,n+1):
+  w[tt]=np.copy(w[tt]+y[t]*z.item(tt,t))
+print w
+
 
