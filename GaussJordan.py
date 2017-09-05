@@ -38,7 +38,6 @@ for tt in xrange(0, n):
    x[tt]=np.copy(x[t])
    x[t]=np.copy(y)
   x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
- print x
 
 print "Matriz final"
 print x
