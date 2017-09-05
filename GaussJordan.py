@@ -6,10 +6,6 @@
 
 #2  2 -1  3
 #3  3  1  7
-#1 -2 -5  5
-
-#2  2 -1  3
-#3  3  1  7
 #1 -1  5  5
 
 import sys
@@ -37,13 +33,11 @@ print x
 print "Comecando o escalonamento"
 for tt in xrange(0, n):
  for t in xrange(tt+1,n+1):
-  if abs(x.item(tt,tt))>=abs(x.item(t,tt)):
-   x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
-  else:
+  if abs(x.item(tt,tt))<abs(x.item(t,tt)):
    y=np.copy(x[tt])
    x[tt]=np.copy(x[t])
    x[t]=np.copy(y)
-   x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
+  x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
  print x
 
 print "Matriz final"
