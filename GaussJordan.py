@@ -10,7 +10,16 @@
 
 import sys
 import numpy as np
-x=np.matrix( ((2.,2.,-1.,3.), (3.,3.,1.,7.), (1.,-2.,-5.,5.)) )
+
+fileread=open('matriz.dat', 'r')
+l=[ line.split() for line in fileread ]
+for i in xrange(0, len(l)):
+ for ii in xrange(0,len(l)+1):
+  l[i][ii]=float(l[i][ii])
+
+x=np.matrix(l)
+
+
 z=np.copy(x)
 n=len(x)-1
 print "Matriz antes de tudo:"
