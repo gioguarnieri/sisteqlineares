@@ -15,20 +15,20 @@ z=np.copy(x)
 n=len(x)-1
 print "Matriz antes de tudo:"
 print x
-for i in xrange(n,-1,-1):
- for ii in xrange(n,-1,-1):
-  if(x.item(i,ii)==0):
-   y=np.copy(x[ii+1])
-   x[ii+1]=np.copy(x[i])
-   x[i]=np.copy(y)
-print "Matriz ordenada: "
-print x
+#for i in xrange(n,-1,-1):
+# for ii in xrange(n,-1,-1):
+#  if(x.item(i,ii)==0):
+#   y=np.copy(x[ii+1])
+#   x[ii+1]=np.copy(x[i])
+#   x[i]=np.copy(y)
+#print "Matriz ordenada: "
+#print x
 
-for i in xrange(1,n+1):
- x[i]=np.copy(x[i]-x[0]*(x.item(i,0)/x.item(0,0)))
+#for i in xrange(1,n+1):
+# x[i]=np.copy(x[i]-x[0]*(x.item(i,0)/x.item(0,0)))
 
-print "Matriz com primeira coluna zerada"
-print x
+#print "Matriz com primeira coluna zerada"
+#print x
 
 print "Comecando o escalonamento"
 for tt in xrange(0, n):
@@ -54,10 +54,10 @@ for i in xrange(n,-1,-1):
  y[i]=y[i]/x.item(i,i)
 
 
-print "Valores finais da substituicao:"
+print "Valores finais do escalonamento:"
 print y
 
-print "Valores depois de substituir: "
+print "Valores depois de substituir nos coeficientes: "
 w=np.zeros([n+1], float)
 
 for tt in xrange(0,n+1):
