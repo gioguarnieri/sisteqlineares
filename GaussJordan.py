@@ -53,11 +53,9 @@ def Coeficientes(x):
 
 fileread=open('matriz.dat', 'r')
 l=[ line.split() for line in fileread ]
-print len(l)
 for i in xrange(0, len(l)):
  for ii in xrange(0,len(l)+1):
   l[i][ii]=float(l[i][ii])
-  print i, ii
 
 x=np.matrix(l)
 
