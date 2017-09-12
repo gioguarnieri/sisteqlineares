@@ -91,8 +91,10 @@ print det
 
 y=Substitui(x)
 
+simply=[ round(elem,2) for elem in y ]
+
 print "Valores finais do escalonamento:"
-print y
+print simply
 
 w=Coeficientes(x)
 print "Valores depois de substituir nos coeficientes: "
