@@ -11,11 +11,53 @@
 import sys
 import numpy as np
 
+def Escalona(x):
+ moddet=0
+ for tt in xrange(0, n):
+  for t in xrange(tt+1,n+1):
+   if abs(x.item(tt,tt))<abs(x.item(t,tt)):
+    moddet=moddet+1
+    y=np.copy(x[tt])
+    x[tt]=np.copy(x[t])
+    x[t]=np.copy(y)
+   x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
+ return x, moddet
+
+def CalculoDet(x):
+ det=1
+ for i in xrange(0,n+1):
+  det=det*x.item(i,i)
+ det=det*(-1)**moddet
+ return det
+
+def Substitui(x):
+ y=np.zeros([n+1], float)
+ for i in xrange(0,n+1):
+  y[i]=x.item(i,n+1)
+ 
+ for i in xrange(n,-1,-1):
+  j=n
+  while (j>i):
+   y[i]=y[i]-x.item(i,j)*y[j]
+   j=j-1
+  y[i]=y[i]/x.item(i,i)
+ return y
+
+def Coeficientes(x):
+ w=np.zeros([n+1], float)
+ for tt in xrange(0,n+1):
+  for t in xrange(0,n+1):
+   w[tt]=np.copy(w[tt]+y[t]*z.item(tt,t))
+ return w
+
+
 fileread=open('matriz.dat', 'r')
 l=[ line.split() for line in fileread ]
+print len(l)
 for i in xrange(0, len(l)):
  for ii in xrange(0,len(l)+1):
   l[i][ii]=float(l[i][ii])
+  print i, ii
 
 x=np.matrix(l)
 
@@ -38,40 +80,24 @@ print x
 
 #print "Matriz com primeira coluna zerada"
 #print x
-
+moddet=0
 print "Comecando o escalonamento"
-for tt in xrange(0, n):
- for t in xrange(tt+1,n+1):
-  if abs(x.item(tt,tt))<abs(x.item(t,tt)):
-   y=np.copy(x[tt])
-   x[tt]=np.copy(x[t])
-   x[t]=np.copy(y)
-  x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
+x,moddet=Escalona(x)
 
 print "Matriz final"
 print x
 
-y=np.zeros([n+1], float)
-for i in xrange(0,n+1):
- y[i]=x.item(i,n+1)
+det=CalculoDet(x)
+print "Valor do determinante:"
+print det
 
-for i in xrange(n,-1,-1):
- j=n
- while (j>i):
-  y[i]=y[i]-x.item(i,j)*y[j]
-  j=j-1
- y[i]=y[i]/x.item(i,i)
-
+y=Substitui(x)
 
 print "Valores finais do escalonamento:"
 print y
 
+w=Coeficientes(x)
 print "Valores depois de substituir nos coeficientes: "
-w=np.zeros([n+1], float)
-
-for tt in xrange(0,n+1):
- for t in xrange(0,n+1):
-  w[tt]=np.copy(w[tt]+y[t]*z.item(tt,t))
 print w
 
 
