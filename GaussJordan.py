@@ -51,7 +51,7 @@ def Coeficientes(x):
  return w
 
 
-fileread=open('matriz.dat', 'r')
+fileread=open(sys.argv[1], 'r')
 l=[ line.split() for line in fileread ]
 for i in xrange(0, len(l)):
  for ii in xrange(0,len(l)+1):
