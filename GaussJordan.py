@@ -11,17 +11,31 @@
 import sys
 import numpy as np
 
+def MatrizLU(x):
+ t=0
+ lu=np.zeros((n+1,n+1), float)
+ for ii in xrange(0,n+1):
+  for i in xrange(0,ii+1):
+   if(ii==i):
+    lu.itemset((i,i),1)
+   else:
+    lu.itemset((ii,i),x[t])
+    t=t+1
+ return lu
+
 def Escalona(x):
+ lamda=[]
  moddet=0
  for tt in xrange(0, n):
   for t in xrange(tt+1,n+1):
-   if abs(x.item(tt,tt))<abs(x.item(t,tt)):
-    moddet=moddet+1
-    y=np.copy(x[tt])
-    x[tt]=np.copy(x[t])
-    x[t]=np.copy(y)
+   #if abs(x.item(tt,tt))<abs(x.item(t,tt)):
+   # moddet=moddet+1
+   # y=np.copy(x[tt])
+   # x[tt]=np.copy(x[t])
+   # x[t]=np.copy(y)
+   lamda.append(x.item(t,tt)/x.item(tt,tt))
    x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
- return x, moddet
+ return x, moddet,lamda
 
 def CalculoDet(x):
  det=1
@@ -33,7 +47,7 @@ def CalculoDet(x):
 def Substitui(x):
  y=np.zeros([n+1], float)
  for i in xrange(0,n+1):
-  y[i]=x.item(i,n+1)
+  y[i]=x.item(i,n)
  
  for i in xrange(n,-1,-1):
   j=n
@@ -54,7 +68,7 @@ def Coeficientes(x):
 fileread=open(sys.argv[1], 'r')
 l=[ line.split() for line in fileread ]
 for i in xrange(0, len(l)):
- for ii in xrange(0,len(l)+1):
+ for ii in xrange(0,len(l)):
   l[i][ii]=float(l[i][ii])
 
 x=np.matrix(l)
@@ -64,23 +78,17 @@ z=np.copy(x)
 n=len(x)-1
 print "Matriz antes de tudo:"
 print x
-#for i in xrange(n,-1,-1):
-# for ii in xrange(n,-1,-1):
-#  if(x.item(i,ii)==0):
-#   y=np.copy(x[ii+1])
-#   x[ii+1]=np.copy(x[i])
-#   x[i]=np.copy(y)
-#print "Matriz ordenada: "
-#print x
 
-#for i in xrange(1,n+1):
-# x[i]=np.copy(x[i]-x[0]*(x.item(i,0)/x.item(0,0)))
-
-#print "Matriz com primeira coluna zerada"
-#print x
 moddet=0
 print "Comecando o escalonamento"
-x,moddet=Escalona(x)
+x,moddet,l=Escalona(x)
+
+print "tamanho de l:"
+print len(l)
+
+print "Matriz L"
+lu=np.matrix(MatrizLU(l))
+print lu
 
 print "Matriz final"
 print x
