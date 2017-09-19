@@ -29,10 +29,13 @@ Programas para resolver sistemas de equações lineares, conteúdo:
  
  Linha n = Linha n - an,1/an,n-1 * Linha n-1
  
+ Os valores de an,1/an,n-1 são guardados em uma matriz, de acordo com a posição deles, para ser feita posteriormente a matriz L, que é composta de 1 na diagonal principal e desses valores na parte triangular inferior.
+ 
  Repetindo isso para todas as linhas que tem abaixo da linha n-1, então da linha 1, o processo é repetido n-1 vezes, para linha 2 n-2, etc.
  
  * No final é calculado os valores dos coeficientes, fazendo uma multiplicação pelos elementos depois uma subtração pelos elementos da coluna k=n+1,
  
  xk=ak,5 - soma de k-1 a 1 dos valores ak,i     onde o i é o indice do somatório
  
+ O arquivo matriz.png demonstra como a quantidade de operações está em função da dimensão n da matriz, subindo de maneira cúbica.
  
