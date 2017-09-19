@@ -39,3 +39,4 @@ Programas para resolver sistemas de equações lineares, conteúdo:
  
  O arquivo matriz.png demonstra como a quantidade de operações está em função da dimensão n da matriz, subindo de maneira cúbica.
  
+ Foram feitas matrizes de n=3,...,9 para a demonstração deste gráfico, geradas aleatoriamente com o arquivo gerar matrizes e selecionadas as matrizes que não deram divisão por 0.
