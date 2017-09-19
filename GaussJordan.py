@@ -11,6 +11,7 @@
 import sys
 import numpy as np
 
+
 def Ler(x):
  resp=[]
  fileread=open(sys.argv[1], 'r')
@@ -24,14 +25,6 @@ def Ler(x):
  x=np.matrix(l)
  return x, resp
 
-
-
-#def MatrizLU(x):
-# t=0
-# for ii in xrange(0,n+1):
-#  for i in xrange(0,ii+1):
-#    t=t+1
-# return lu
 
 
 
@@ -49,6 +42,7 @@ def Escalona(x,resp):
    # y=np.copy(x[tt])
    # x[tt]=np.copy(x[t])
    # x[t]=np.copy(y)
+   op=op+2+n
    lamda.append(x.item(t,tt)/x.item(tt,tt))
    resp2[t]=resp2[t]-lamda[-1]*resp2[tt]
    x[t]=np.copy(x[t]-lamda[-1]*x[tt])
@@ -130,4 +124,9 @@ print simply
 w=Coeficientes(z,y)
 print "Valores depois de substituir nos coeficientes: "
 print w
+
+print "Quantidade de operacoes: "
+print op
+filewrite=open("graph.dat", "a")
+filewrite.write(str(len(x))+' '+str(op)+'\n')
 
