@@ -11,21 +11,37 @@
 import sys
 import numpy as np
 
-def MatrizLU(x):
- t=0
- lu=np.zeros((n+1,n+1), float)
- for ii in xrange(0,n+1):
-  for i in xrange(0,ii+1):
-   if(ii==i):
-    lu.itemset((i,i),1)
-   else:
-    lu.itemset((ii,i),x[t])
-    t=t+1
- return lu
+def Ler(x):
+ resp=[]
+ fileread=open(sys.argv[1], 'r')
+ l=[ line.split() for line in fileread ]
+ for i in xrange(0, len(l)):
+  for ii in xrange(0,len(l)+1):
+   l[i][ii]=float(l[i][ii])
+ for i in xrange(0,len(l)):
+  resp.append(l[i][len(l)])
+  l[i].pop(len(l))
+ x=np.matrix(l)
+ return x, resp
 
-def Escalona(x):
+
+
+#def MatrizLU(x):
+# t=0
+# for ii in xrange(0,n+1):
+#  for i in xrange(0,ii+1):
+#    t=t+1
+# return lu
+
+
+
+def Escalona(x,resp):
+ lu=np.zeros((n+1,n+1), float)
+ resp2=np.zeros(n, float)
+ resp2=resp
  lamda=[]
  moddet=0
+ op=0
  for tt in xrange(0, n):
   for t in xrange(tt+1,n+1):
    #if abs(x.item(tt,tt))<abs(x.item(t,tt)):
@@ -34,8 +50,14 @@ def Escalona(x):
    # x[tt]=np.copy(x[t])
    # x[t]=np.copy(y)
    lamda.append(x.item(t,tt)/x.item(tt,tt))
-   x[t]=np.copy(x[t]-x.item(t,tt)/x.item(tt,tt)*x[tt])
- return x, moddet,lamda
+   resp2[t]=resp2[t]-lamda[-1]*resp2[tt]
+   x[t]=np.copy(x[t]-lamda[-1]*x[tt])
+   lu.itemset((t,tt),lamda[-1])
+ for i in xrange(0,n+1):
+  lu.itemset((i,i),1)
+ return x,moddet,lamda,op,resp2,lu
+
+
 
 def CalculoDet(x):
  det=1
@@ -44,11 +66,10 @@ def CalculoDet(x):
  det=det*(-1)**moddet
  return det
 
-def Substitui(x):
- y=np.zeros([n+1], float)
- for i in xrange(0,n+1):
-  y[i]=x.item(i,n)
- 
+
+
+def Substitui(x,resp2):
+ y=resp2
  for i in xrange(n,-1,-1):
   j=n
   while (j>i):
@@ -57,7 +78,9 @@ def Substitui(x):
   y[i]=y[i]/x.item(i,i)
  return y
 
-def Coeficientes(x):
+
+
+def Coeficientes(z,y):
  w=np.zeros([n+1], float)
  for tt in xrange(0,n+1):
   for t in xrange(0,n+1):
@@ -65,47 +88,46 @@ def Coeficientes(x):
  return w
 
 
-fileread=open(sys.argv[1], 'r')
-l=[ line.split() for line in fileread ]
-for i in xrange(0, len(l)):
- for ii in xrange(0,len(l)):
-  l[i][ii]=float(l[i][ii])
-
-x=np.matrix(l)
-
+x=0
+x,resp=Ler(x)
+lu=np.zeros((len(x)+1,len(x)+1), float)
 
 z=np.copy(x)
 n=len(x)-1
 print "Matriz antes de tudo:"
 print x
 
+print "Parametros: "
+print resp
+
 moddet=0
 print "Comecando o escalonamento"
-x,moddet,l=Escalona(x)
-
-print "tamanho de l:"
-print len(l)
+x,moddet,l,op,resp2,lu=Escalona(x,resp)
 
 print "Matriz L"
-lu=np.matrix(MatrizLU(l))
 print lu
 
-print "Matriz final"
+print "Matriz U"
 print x
+
+print "LxU"
+print lu*x 
+
+print "LxU e igual a matriz original?"
+print lu*x==z
 
 det=CalculoDet(x)
 print "Valor do determinante:"
 print det
 
-y=Substitui(x)
+y=Substitui(x,resp2)
 
 simply=[ round(elem,2) for elem in y ]
 
 print "Valores finais do escalonamento:"
 print simply
 
-w=Coeficientes(x)
+w=Coeficientes(z,y)
 print "Valores depois de substituir nos coeficientes: "
 print w
-
 
